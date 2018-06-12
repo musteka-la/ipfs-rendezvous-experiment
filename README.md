@@ -2,4 +2,4 @@
 
 To set up, clone this repo and run:
 
-`npm install && node index.js`
+`npm install && node src/index.js`
