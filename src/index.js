@@ -1,11 +1,7 @@
 'use strict'
 
 const TCP = require('libp2p-tcp')
-const MulticastDNS = require('libp2p-mdns')
 const WS = require('libp2p-websockets')
-const WebSocketStar = require('libp2p-websocket-star')
-const Railing = require('libp2p-railing')
-const KadDHT = require('libp2p-kad-dht')
 const Multiplex = require('libp2p-mplex')
 const SECIO = require('libp2p-secio')
 const Libp2p = require('libp2p')
