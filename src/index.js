@@ -16,7 +16,7 @@ const series = require('async/series')
 const {Discovery, Server} = require('libp2p-rendezvous')
 
 const envId = process.env['ENV_ID']
-const Id = require(`./conf/${envId}.json`)
+const Id = require(`./conf/${envId || 'monkey'}.json`)
 
 class Node extends Libp2p {
   constructor(peerInfo, peerBook, options) {
