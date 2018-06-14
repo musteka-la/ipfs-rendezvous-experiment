@@ -22,25 +22,14 @@ class Node extends Libp2p {
     options = options || {}
 
     const modules = {
-      transport: [new TCP(), new WS()],
+      transport: [
+        new TCP(), 
+        new WS()
+      ],
       connection: {
         muxer: [Multiplex],
         crypto: [SECIO]
       }
-    }
-
-    if (options.dht) {
-      modules.DHT = KadDHT
-    }
-
-    if (options.mdns) {
-      const mdns = new MulticastDNS(peerInfo, 'ipfs.local')
-      modules.discovery.push(mdns)
-    }
-
-    if (options.bootstrap) {
-      const r = new Railing(options.bootstrap)
-      modules.discovery.push(r)
     }
 
     if (options.modules && options.modules.transport) {
@@ -97,8 +86,7 @@ PeerId.createFromJSON(Id, (err, peerId) => {
       throw new Error(err)
     }
 
-    console.log('Node started')
-
+    console.log('Rendezvous started')
     peer.multiaddrs.forEach((a) => console.log(`listening on addr: ${a.toString()}`))
   })
 })
