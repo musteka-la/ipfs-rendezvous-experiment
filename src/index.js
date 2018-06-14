@@ -70,8 +70,8 @@ PeerId.createFromJSON(Id, (err, peerId) => {
   }
 
   const peer = new PeerInfo(peerId)
-  peer.multiaddrs.add('/ip4/0.0.0.0/tcp/3333')
-  peer.multiaddrs.add('/ip4/0.0.0.0/tcp/3334/ws')
+  peer.multiaddrs.add('/ip4/0.0.0.0/tcp/30333')
+  peer.multiaddrs.add('/ip4/0.0.0.0/tcp/30334/ws')
   const swarm = new Node(peer, null, {
     relay: {
       enabled: true,
