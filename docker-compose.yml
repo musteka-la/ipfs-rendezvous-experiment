@@ -1,0 +1,6 @@
+ipfs-rendezvous-experiment:
+  build: ./
+  restart: always
+  ports:
+    - "30333:30333"
+    - "30334:30334"
