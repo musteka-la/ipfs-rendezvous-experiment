@@ -36,6 +36,7 @@
     "mafmt": "dryajov/js-mafmt",
     "multiaddr": "dryajov/js-multiaddr",
     "peer-id": "^0.10.7",
-    "peer-info": "dryajov/js-peer-info"
+    "peer-info": "dryajov/js-peer-info",
+    "posix": "^4.1.2"
   }
 }
