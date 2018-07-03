@@ -23,11 +23,11 @@
   "dependencies": {
     "async": "^2.6.1",
     "libp2p": "^0.20.4",
+    "libp2p-bootstrap": "^0.9.3",
     "libp2p-circuit": "github:dryajov/js-libp2p-circuit",
     "libp2p-kad-dht": "^0.10.0",
     "libp2p-mdns": "^0.12.0",
     "libp2p-mplex": "^0.8.0",
-    "libp2p-railing": "^0.9.1",
     "libp2p-rendezvous": "MetaMask/js-libp2p-rendezvous.git#feat/improve-and-cleanup",
     "libp2p-secio": "^0.10.0",
     "libp2p-tcp": "^0.12.0",
@@ -36,6 +36,7 @@
     "mafmt": "dryajov/js-mafmt",
     "multiaddr": "dryajov/js-multiaddr",
     "peer-id": "^0.10.7",
-    "peer-info": "dryajov/js-peer-info"
+    "peer-info": "dryajov/js-peer-info",
+    "posix": "^4.1.2"
   }
 }

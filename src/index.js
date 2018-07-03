@@ -8,11 +8,16 @@ const Libp2p = require('libp2p')
 const PeerId = require('peer-id')
 const PeerInfo = require('peer-info')
 const series = require('async/series')
+const posix = require('posix')
 
 const {Discovery, Server} = require('libp2p-rendezvous')
 
 const envId = process.env['ENV_ID']
 const Id = require(`./conf/${envId || 'monkey'}.json`)
+
+// raise maximum number of open file descriptors to 10k,
+// hard limit is left unchanged
+posix.setrlimit('nofile', { soft: 10000 })
 
 class Node extends Libp2p {
   constructor(peerInfo, peerBook, options) {
