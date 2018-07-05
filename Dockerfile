@@ -10,7 +10,7 @@ COPY ./package.json /rendezvous/package.json
 RUN npm install
 
 # copy over app dir
-COPY ./ /rendezvous/
+COPY ./src /rendezvous/src
 
 # start server
 CMD npm run start
