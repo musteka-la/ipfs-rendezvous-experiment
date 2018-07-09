@@ -21,8 +21,9 @@
     "aegir": "^14.0.0"
   },
   "dependencies": {
+    "@nodeutils/defaults-deep": "^1.1.0",
     "async": "^2.6.1",
-    "libp2p": "^0.20.4",
+    "libp2p": "^0.22.0",
     "libp2p-bootstrap": "^0.9.3",
     "libp2p-circuit": "github:dryajov/js-libp2p-circuit",
     "libp2p-kad-dht": "^0.10.0",

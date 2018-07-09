@@ -9,6 +9,7 @@ const PeerId = require('peer-id')
 const PeerInfo = require('peer-info')
 const series = require('async/series')
 const posix = require('posix')
+const defaultsDeep = require('@nodeutils/defaults-deep')
 
 const {Discovery, Server} = require('libp2p-rendezvous')
 
@@ -20,46 +21,47 @@ const Id = require(`./conf/${envId || 'monkey'}.json`)
 posix.setrlimit('nofile', { soft: 10000 })
 
 class Node extends Libp2p {
-  constructor(peerInfo, peerBook, options) {
-    options = options || {}
+  constructor (peerInfo, options) {
+    const rndvzDiscovery = new Discovery()
 
-    const modules = {
-      transport: [
-        new TCP(), 
-        new WS()
-      ],
-      connection: {
-        muxer: [Multiplex],
-        crypto: [SECIO]
+    const defaults = {
+      peerInfo,
+      modules: {
+        transport: [
+          WS,
+          TCP
+        ],
+        streamMuxer: [
+          Multiplex
+        ],
+        connEncryption: [
+          SECIO
+        ],
+        peerDiscovery: [
+          rndvzDiscovery
+        ]
+      },
+      config: {
       }
     }
 
-    if (options.modules && options.modules.transport) {
-      options.modules.transport.forEach((t) => modules.transport.push(t))
-    }
-
-    if (options.modules && options.modules.discovery) {
-      options.modules.discovery.forEach((d) => modules.discovery.push(d))
-    }
-
-    super(modules, peerInfo, peerBook, options)
-    this._rndzvServer = new Server({swarm: this})
-    this._rndvzDiscovery = new Discovery(this)
+    super(defaultsDeep(options, defaults))
+    rndvzDiscovery.init(this)
+    this._rndvzDiscovery = rndvzDiscovery
+    this._rndzvServer = new Server({ swarm: this })
     this._rndvzDiscovery.on('peer', (peerInfo) => this.emit('peer:discovery', peerInfo))
   }
 
   start (callback) {
     series([
       (cb) => super.start(cb),
-      (cb) => this._rndzvServer.start(cb),
-      (cb) => this._rndvzDiscovery.start(cb)
+      (cb) => this._rndzvServer.start(cb)
     ], callback)
   }
 
-  stop(callback) {
+  stop (callback) {
     series([
       (cb) => this._rndzvServer.stop(cb),
-      (cb) => this._rndvzDiscovery.stop(cb),
       (cb) => super.stop(cb)
     ], callback)
   }
@@ -74,11 +76,13 @@ PeerId.createFromJSON(Id, (err, peerId) => {
   const peer = new PeerInfo(peerId)
   peer.multiaddrs.add('/ip4/0.0.0.0/tcp/30333')
   peer.multiaddrs.add('/ip4/0.0.0.0/tcp/30334/ws')
-  const swarm = new Node(peer, null, {
-    relay: {
-      enabled: true,
-      hop: {
-        enabled: true
+  const swarm = new Node(peer, {
+    config: {
+      relay: {
+        enabled: true,
+        hop: {
+          enabled: true
+        }
       }
     }
   })
