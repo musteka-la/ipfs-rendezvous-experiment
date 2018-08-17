@@ -3,4 +3,9 @@ ipfs-rendezvous-experiment:
   restart: always
   ports:
     - "30333:30333"
-    - "30334:30334"
+    - "30334"
+  environment:
+    VIRTUAL_PORT: "30334"
+    VIRTUAL_HOST: "bootstrap1.lab.metamask.io"
+    LETSENCRYPT_HOST: "bootstrap1.lab.metamask.io"
+    LETSENCRYPT_EMAIL: "admin@metamask.io"
