@@ -25,7 +25,7 @@
     "async": "^2.6.1",
     "libp2p": "^0.22.0",
     "libp2p-bootstrap": "^0.9.3",
-    "libp2p-circuit": "github:dryajov/js-libp2p-circuit",
+    "libp2p-circuit": "0.2.1",
     "libp2p-kad-dht": "^0.10.0",
     "libp2p-mdns": "^0.12.0",
     "libp2p-mplex": "^0.8.0",
@@ -38,6 +38,7 @@
     "multiaddr": "dryajov/js-multiaddr",
     "peer-id": "^0.10.7",
     "peer-info": "dryajov/js-peer-info",
-    "posix": "^4.1.2"
+    "posix": "^4.1.2",
+    "pull-generate": "^2.2.0"
   }
 }
