@@ -1,0 +1,1 @@
+docker build -t dryajov/ipfs-rendezvous-experiment .

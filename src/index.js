@@ -8,17 +8,22 @@ const Libp2p = require('libp2p')
 const PeerId = require('peer-id')
 const PeerInfo = require('peer-info')
 const series = require('async/series')
-const posix = require('posix')
+// const posix = require('posix')
 const defaultsDeep = require('@nodeutils/defaults-deep')
 
-const {Discovery, Server} = require('libp2p-rendezvous')
+const { Discovery, Server } = require('libp2p-rendezvous')
 
 const envId = process.env['ENV_ID']
 const Id = require(`./conf/${envId || 'monkey'}.json`)
 
 // raise maximum number of open file descriptors to 10k,
 // hard limit is left unchanged
-posix.setrlimit('nofile', { soft: 10000 })
+// posix.setrlimit('nofile', { soft: 10000 })
+
+const wsPort = process.env['WS_PORT']
+const tcpPort = process.env['TCP_PORT']
+const isRndvz = process.env['IS_RNDVZ'] || false
+const isCircuit = process.env['IS_CIRCUIT'] || false
 
 class Node extends Libp2p {
   constructor (peerInfo, options) {
@@ -38,11 +43,14 @@ class Node extends Libp2p {
           SECIO
         ],
         peerDiscovery: [
-          rndvzDiscovery
         ]
       },
       config: {
       }
+    }
+
+    if (isRndvz) {
+      defaults.modules.peerDiscovery.push(rndvzDiscovery)
     }
 
     super(defaultsDeep(options, defaults))
@@ -55,13 +63,13 @@ class Node extends Libp2p {
   start (callback) {
     series([
       (cb) => super.start(cb),
-      (cb) => this._rndzvServer.start(cb)
+      (cb) => isRndvz ? this._rndzvServer.start(cb) : cb()
     ], callback)
   }
 
   stop (callback) {
     series([
-      (cb) => this._rndzvServer.stop(cb),
+      (cb) => isRndvz ? this._rndzvServer.stop(cb) : cb(),
       (cb) => super.stop(cb)
     ], callback)
   }
@@ -74,16 +82,23 @@ PeerId.createFromJSON(Id, (err, peerId) => {
   }
 
   const peer = new PeerInfo(peerId)
-  peer.multiaddrs.add('/ip4/0.0.0.0/tcp/30333')
-  peer.multiaddrs.add('/ip4/0.0.0.0/tcp/30334/ws')
-  const swarm = new Node(peer, {
-    config: {
-      relay: {
+  peer.multiaddrs.add(`/ip4/0.0.0.0/tcp/${tcpPort || 30333}`)
+  peer.multiaddrs.add(`/ip4/0.0.0.0/tcp/${wsPort || 30334}/ws`)
+
+  const config = {}
+  if (isCircuit) {
+    config['relay'] = {
+      enabled: true,
+      hop: {
         enabled: true,
-        hop: {
-          enabled: true
-        }
+        active: false
       }
+    }
+  }
+  const swarm = new Node(peer, {
+    config,
+    connectionManager: {
+      maxPeers: 10000
     }
   })
   swarm.start(err => {

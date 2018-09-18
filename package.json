@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "postinstall": "patch-package"
   },
   "repository": {
     "type": "git",
@@ -18,26 +19,28 @@
   },
   "homepage": "https://github.com/MetaMask/ipfs-rendezvous-experiment#readme",
   "devDependencies": {
-    "aegir": "^14.0.0"
+    "aegir": "^14.0.0",
+    "patch-package": "^5.1.1"
   },
   "dependencies": {
     "@nodeutils/defaults-deep": "^1.1.0",
     "async": "^2.6.1",
-    "libp2p": "^0.22.0",
-    "libp2p-bootstrap": "^0.9.3",
-    "libp2p-circuit": "0.2.1",
-    "libp2p-kad-dht": "^0.10.0",
-    "libp2p-mdns": "^0.12.0",
-    "libp2p-mplex": "^0.8.0",
+    "libp2p": "~0.22.0",
+    "libp2p-bootstrap": "~0.9.3",
+    "libp2p-circuit": "github:dryajov/js-libp2p-circuit",
+    "libp2p-kad-dht": "~0.10.0",
+    "libp2p-mdns": "~0.12.0",
+    "libp2p-mplex": "~0.8.0",
     "libp2p-rendezvous": "MetaMask/js-libp2p-rendezvous.git#feat/improve-and-cleanup",
-    "libp2p-secio": "^0.10.0",
-    "libp2p-tcp": "^0.12.0",
-    "libp2p-websocket-star": "^0.8.0",
-    "libp2p-websockets": "^0.12.0",
-    "mafmt": "dryajov/js-mafmt",
-    "multiaddr": "dryajov/js-multiaddr",
-    "peer-id": "^0.10.7",
-    "peer-info": "dryajov/js-peer-info",
+    "libp2p-secio": "~0.10.0",
+    "libp2p-switch": "~0.40.8",
+    "libp2p-tcp": "~0.13.0",
+    "libp2p-websocket-star": "~0.8.0",
+    "libp2p-websockets": "~0.12.0",
+    "mafmt": "^6.0.2",
+    "multiaddr": "^4.0.0",
+    "peer-id": "~0.10.7",
+    "peer-info": "~0.14.1",
     "posix": "^4.1.2",
     "pull-generate": "^2.2.0"
   }
