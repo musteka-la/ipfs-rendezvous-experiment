@@ -53,6 +53,7 @@ kistunet-viper:
     - "30337"
   environment:
     DEBUG: "*libp2p*"
+    ENV_ID: "viper"
     # IS_CIRCUIT: "1"
     IS_RNDVZ: "1"
     WS_PORT: "30337"
