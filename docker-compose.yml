@@ -1,11 +1,62 @@
-ipfs-rendezvous-experiment:
+kistunet-monkey:
   build: ./
   restart: always
   ports:
-    - "30333:30333"
     - "30334"
   environment:
+    DEBUG: "*libp2p*"
+    ENV_ID: "monkey"
+    IS_CIRCUIT: "1"
+    # IS_RNDVZ: "1"
+    WS_PORT: "30334"
     VIRTUAL_PORT: "30334"
-    VIRTUAL_HOST: "bootstrap1.lab.metamask.io"
-    LETSENCRYPT_HOST: "bootstrap1.lab.metamask.io"
+    VIRTUAL_HOST: "monkey.lab.metamask.io"
+    LETSENCRYPT_HOST: "monkey.lab.metamask.io"
+    LETSENCRYPT_EMAIL: "admin@metamask.io"
+
+kistunet-tigress:
+  build: ./
+  restart: always
+  ports:
+    - "30335"
+  environment:
+    DEBUG: "*libp2p*"
+    ENV_ID: "tigress"
+    IS_CIRCUIT: "1"
+    # IS_RNDVZ: "1"
+    WS_PORT: "30335"
+    VIRTUAL_PORT: "30335"
+    VIRTUAL_HOST: "tigress.lab.metamask.io"
+    LETSENCRYPT_HOST: "tigress.lab.metamask.io"
+    LETSENCRYPT_EMAIL: "admin@metamask.io"
+
+kistunet-crane:
+  build: ./
+  restart: always
+  ports:
+    - "30336"
+  environment:
+    DEBUG: "*libp2p*"
+    ENV_ID: "crane"
+    IS_CIRCUIT: "1"
+    # IS_RNDVZ: "1"
+    WS_PORT: "30336"
+    VIRTUAL_PORT: "30336"
+    VIRTUAL_HOST: "crane.lab.metamask.io"
+    LETSENCRYPT_HOST: "crane.lab.metamask.io"
+    LETSENCRYPT_EMAIL: "admin@metamask.io"
+
+kistunet-viper:
+  build: ./
+  restart: always
+  ports:
+    - "30337"
+  environment:
+    DEBUG: "*libp2p*"
+    # IS_CIRCUIT: "1"
+    IS_RNDVZ: "1"
+    WS_PORT: "30337"
+    VIRTUAL_PORT: "30337"
+    VIRTUAL_HOST: "viper.lab.metamask.io"
+    LETSENCRYPT_HOST: "viper.lab.metamask.io"
     LETSENCRYPT_EMAIL: "admin@metamask.io"
